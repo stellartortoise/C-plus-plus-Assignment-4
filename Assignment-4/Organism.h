@@ -13,14 +13,21 @@ protected:
 	int x;
 	int y;
 	int size;
+	char type;
 	bool moved;
 	City* city;
 
 public:
 	Organism();
 	Organism(City* city, int size);
+	Organism(City* city, int size, int x, int y);
 	virtual ~Organism();
 	virtual void turn() = 0;
+
+	bool getMoved();
+	void setMoved(bool _moved);
+
+	bool getType();
 
 	friend ostream& operator<<(ostream& output, Organism* organism);
 };

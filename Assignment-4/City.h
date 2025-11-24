@@ -27,6 +27,10 @@ public:
 	friend ostream& operator<<(ostream& output, City& city);
 
 	void col(int c);   //for colors
+
+	bool hasDiversity(); //returns true if both humans and zombies exist in the city
+	void countOrganisms(char type); //counts organisms of a given type
+	int getGeneration()
 };
 
 #endif

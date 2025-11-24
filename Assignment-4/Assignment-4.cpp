@@ -29,7 +29,7 @@ int main() {
         ClearScreen();
         city->step();
         city->reset(); //resets moved flags
-        city->countOrganisms(Z or H goes here);// run once for each type
+        city->countOrganisms('H');// run once for each type
         cout << *city; //prints city
         cout << "GENERATION " << city->getGeneration() << endl;
         cout << "HUMANS: " << city->countType(HUMAN_CH) << endl;

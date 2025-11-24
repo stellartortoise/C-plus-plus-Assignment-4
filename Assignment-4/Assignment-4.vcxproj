@@ -124,6 +124,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Assignment-4.cpp" />
+    <ClCompile Include="City.cpp" />
+    <ClCompile Include="Organism.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="City.h" />
