@@ -5,6 +5,8 @@
 
 class Human : public Organism
 {
+protected:
+	int timeStep;
 public:
 	Human();
 	Human(City* city, int size);
