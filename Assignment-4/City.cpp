@@ -5,12 +5,15 @@
 #include "Zombie.h"
 #include <iomanip>
 #include <windows.h>
+#include <ctime>
 
 //vector<Human> humans;
 //vector<Zombie> zombies;
 
 City::City() : generation(0) 
 {
+	std::srand(static_cast<unsigned>(std::time(0)));
+
 	// Initialize the grid with nullptrs or empty spaces
 	for (int i = 0; i < GRIDSIZE; ++i) 
 	{
@@ -149,8 +152,24 @@ bool City::hasDiversity()
 
 void City::countOrganisms(char type) 
 {
-	int count = humans.size() + zombies.size();
-	
+	/*int count = humans.size() + zombies.size();
+	*/
+
+	int count = 0;
+
+	switch (type)
+	{
+	case 'H':
+		count = humans.size();
+		break;
+	case 'Z':
+		count = zombies.size();
+		break;
+	default:
+		count = 0;
+		break;
+	}
+
 	cout << "Count of type " << type << ": " << count << endl;
 }
 

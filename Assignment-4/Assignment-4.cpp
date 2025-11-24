@@ -32,6 +32,7 @@ int main() {
         city->countOrganisms('H');// run once for each type
         city->countOrganisms('Z');// run once for each type
         cout << *city; //prints city
+        city->col(15); //set color to bright white for output
         cout << "GENERATION " << city->getGeneration() << endl;
         cout << "HUMANS: " << city->countType('H') << endl;
         cout << "ZOMBIES: " << city->countType('Z') << endl;
