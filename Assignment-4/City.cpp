@@ -4,8 +4,8 @@
 #include "Human.h"
 #include "Zombie.h"
 
-vector<Human> humans;
-vector<Zombie> zombies;
+//vector<Human> humans;
+//vector<Zombie> zombies;
 
 City::City() : generation(0) 
 {
@@ -75,16 +75,20 @@ void City::reset()
 int City::countType(char type) 
 {
 	int count = 0;
-	for (int i = 0; i < GRIDSIZE; ++i) 
+	
+	switch (type) 
 	{
-		for (int j = 0; j < GRIDSIZE; ++j) 
-		{
-			if (grid[i][j] != nullptr && grid[i][j]->getType() == type)
-			{
-				count++;
-			}
-		}
+		case HUMAN_CH:
+			count = humans.size();
+			break;
+		case ZOMBIE_CH:
+			count = zombies.size();
+			break;
+		default:
+			count = 0;
+			break;
 	}
+
 	return count;
 }
 
@@ -118,26 +122,12 @@ bool City::hasDiversity()
 	bool hasHumans = false;
 	bool hasZombies = false;
 
-	for (int i = 0; i < GRIDSIZE; ++i) 
+	humans.size() > 0 ? hasHumans = true : hasHumans = false;
+	zombies.size() > 0 ? hasZombies = true : hasZombies = false;
+
+	if (hasHumans && hasZombies) 
 	{
-		for (int j = 0; j < GRIDSIZE; ++j) 
-		{
-			if (grid[i][j] != nullptr)
-			{
-				if (grid[i][j]->getType() == HUMAN_CH)
-				{
-					hasHumans = true;
-				}
-				else if (grid[i][j]->getType() == ZOMBIE_CH)
-				{
-					hasZombies = true;
-				}
-			}
-			if (hasHumans && hasZombies) 
-			{
-				return true;
-			}
-		}
+		return true;
 	}
 
 	return false;
@@ -145,17 +135,8 @@ bool City::hasDiversity()
 
 void City::countOrganisms(char type) 
 {
-	int count = 0;
-	for (int i = 0; i < GRIDSIZE; ++i) 
-	{
-		for (int j = 0; j < GRIDSIZE; ++j) 
-		{
-			if (grid[i][j] != nullptr && grid[i][j]->getType() == type)
-			{
-				count++;
-			}
-		}
-	}
+	int count = humans.size() + zombies.size();
+	
 	cout << "Count of type " << type << ": " << count << endl;
 }
 

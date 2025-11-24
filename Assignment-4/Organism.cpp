@@ -1,11 +1,11 @@
 #include "Organism.h"
 #include "City.h"
 
-Organism::Organism() : x(0), y(0), size(0), moved(false), city(nullptr) {}
+Organism::Organism() : x(0), y(0), size(0), type(SPACE_CH), moved(false), city(nullptr) {}
 
-Organism::Organism(City* city, int size) : x(0), y(0), size(size), moved(false), city(city) {}
+Organism::Organism(City* city, int size) : x(0), y(0), size(size), type(SPACE_CH), moved(false), city(city) {}
 
-Organism::Organism(City* city, int size, int x, int y) : x(x), y(y), size(size), moved(false), city(city) {}
+Organism::Organism(City* city, int size, int x, int y) : x(x), y(y), size(size), type(SPACE_CH), moved(false), city(city) {}
 
 Organism::~Organism() {}
 

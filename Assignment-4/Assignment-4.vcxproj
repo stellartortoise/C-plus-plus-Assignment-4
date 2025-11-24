@@ -125,7 +125,9 @@
   <ItemGroup>
     <ClCompile Include="Assignment-4.cpp" />
     <ClCompile Include="City.cpp" />
+    <ClCompile Include="Human.cpp" />
     <ClCompile Include="Organism.cpp" />
+    <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="City.h" />

@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include "GameSpecs.h"
+#include <vector>
+#include "Human.h"
+#include "Zombie.h"
 
 using namespace std;
 
@@ -30,7 +33,10 @@ public:
 
 	bool hasDiversity(); //returns true if both humans and zombies exist in the city
 	void countOrganisms(char type); //counts organisms of a given type
-	int getGeneration()
+	int getGeneration();
+
+	vector<Human*> humans;
+	vector<Zombie*> zombies;
 };
 
 #endif
