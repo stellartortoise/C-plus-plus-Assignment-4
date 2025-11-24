@@ -4,6 +4,7 @@
 #include "Human.h"
 #include "Zombie.h"
 #include <iomanip>
+#include <windows.h>
 
 //vector<Human> humans;
 //vector<Zombie> zombies;
@@ -110,19 +111,24 @@ int City::countType(char type)
 	return count;
 }
 
-ostream& operator<<(ostream& output, City& city) {
-    for (int i = 0; i < GRIDSIZE; ++i) {
-        for (int j = 0; j < GRIDSIZE; ++j) {
+void City::col(int c)
+{
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, c);
+}
+
+ostream& operator<<(ostream& output, City& city) 
+{
+    for (int i = 0; i < GRIDSIZE; ++i) 
+	{
+        for (int j = 0; j < GRIDSIZE; ++j) 
+		{
+			city.col(city.grid[i][j] ? (city.grid[i][j]->getType() == 'H' ? HUMAN_COLOR : ZOMBIE_COLOR) : DASH_COLOR);
             output << std::setw(2) << (city.grid[i][j] ? city.grid[i][j]->getType() : '-');
         }
         output << endl;
     }
     return output;
-}
-
-void City::col(int c) 
-{
-	
 }
 
 bool City::hasDiversity() 
