@@ -16,6 +16,12 @@ Zombie::Zombie(City* city, int size) : Organism(city, size)
 	city->zombies.push_back(this);
 }
 
+Zombie::Zombie(City* city, int size, int x, int y) : Organism(city, size, x, y) 
+{
+	type = 'Z';
+	city->zombies.push_back(this);
+}
+
 Zombie::~Zombie() 
 {
 	//remove this zombie from the zombies vector in city

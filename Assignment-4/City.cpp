@@ -22,15 +22,13 @@ City::City() : generation(0)
 			//Randomly populate the grid with Humans and Zombies or spaces
 			if (rand() % 100 < 20) // 20% chance to place a Human
 			{
-				Human* human = new Human(this, 1);
+				Human* human = new Human(this, 1, i, j);
 				grid[i][j] = human;
-				//humans.push_back(human);
 			} 
 			else if (rand() % 100 < 5) // 5% chance to place a Zombie
 			{
-				Zombie* zombie = new Zombie(this, 1);
+				Zombie* zombie = new Zombie(this, 1, i, j);
 				grid[i][j] = zombie;
-				//zombies.push_back(zombie);
 			} 
 			else 
 			{

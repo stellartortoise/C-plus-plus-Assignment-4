@@ -15,6 +15,12 @@ Human::Human(City* city, int size) : Organism(city, size)
 	city->humans.push_back(this);
 }
 
+Human::Human(City* city, int size, int x, int y) : Organism(city, size, x, y) 
+{
+	type = 'H';
+	city->humans.push_back(this);
+}
+
 Human::~Human() 
 {
 	//remove this human from the humans vector in city
@@ -24,10 +30,35 @@ Human::~Human()
 
 void Human::turn() 
 {
-	// Implement the logic for a human's turn
-	// This may include moving and breeding if conditions are met
-	// Example move logic (to be replaced with actual implementation)
-	// Check for available adjacent spaces and move if possible
-	// After moving, check if breeding conditions are met and breed if allowed
+
+	vector<pair<int, int>> freespaces;
+
+	// Movement (Human can move left, right, up, down if space is available)
+
+	// Check adjacent cells for empty space
+	if (!city->getOrganism(x - 1, y) && x > 0)
+		freespaces.push_back({ x - 1, y });
+
+	if (!city->getOrganism(x + 1, y) && x < GRIDSIZE - 1)
+		freespaces.push_back({ x + 1, y });
+
+	if (!city->getOrganism(x, y - 1) && y > 0)
+		freespaces.push_back({ x, y - 1 });
+
+	if (!city->getOrganism(x, y + 1) && y < GRIDSIZE - 1)
+		freespaces.push_back({ x, y + 1 });
+
+	// If there are free spaces, move to one randomly
+	if (!freespaces.empty()) 
+	{
+		int randIndex = rand() % freespaces.size();
+		pair<int, int> newPos = freespaces[randIndex];
+		// Update city grid
+		city->setOrganism(nullptr, x, y); // Vacate current position
+		x = newPos.first;
+		y = newPos.second;
+		city->setOrganism(this, x, y); // Move to new position
+	}
+
 	setMoved(true); // Mark as moved for this turn
 }

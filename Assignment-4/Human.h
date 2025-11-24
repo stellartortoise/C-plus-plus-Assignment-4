@@ -8,6 +8,7 @@ class Human : public Organism
 public:
 	Human();
 	Human(City* city, int size);
+	Human(City* city, int size, int x, int y);
 	virtual ~Human();
 
 	void turn(); //all things a human may do on their turn. i.e. a move, and if allowed a recruitment  
