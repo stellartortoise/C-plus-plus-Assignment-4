@@ -14,7 +14,24 @@ City::City() : generation(0)
 	{
 		for (int j = 0; j < GRIDSIZE; ++j) 
 		{
-			grid[i][j] = nullptr; // or new Space() if you have a Space class
+			//Randomly populate the grid with Humans and Zombies or spaces
+			if (rand() % 100 < 20) // 20% chance to place a Human
+			{
+				Human* human = new Human(this, 1);
+				grid[i][j] = human;
+				//humans.push_back(human);
+			} 
+			else if (rand() % 100 < 5) // 5% chance to place a Zombie
+			{
+				Zombie* zombie = new Zombie(this, 1);
+				grid[i][j] = zombie;
+				//zombies.push_back(zombie);
+			} 
+			else 
+			{
+				grid[i][j] = nullptr; // Empty space
+			}
+			
 		}
 	}
 }
@@ -78,10 +95,10 @@ int City::countType(char type)
 	
 	switch (type) 
 	{
-		case HUMAN_CH:
+		case 'H':
 			count = humans.size();
 			break;
-		case ZOMBIE_CH:
+		case 'Z':
 			count = zombies.size();
 			break;
 		default:
@@ -94,18 +111,47 @@ int City::countType(char type)
 
 ostream& operator<<(ostream& output, City& city) 
 {
-	for (int i = 0; i < GRIDSIZE; ++i) 
-	{
-		for (int j = 0; j < GRIDSIZE; ++j) 
-		{
-			if (city.grid[i][j] != nullptr) 
+	//for (int i = 0; i < GRIDSIZE; ++i) 
+	//{
+	//	for (int j = 0; j < GRIDSIZE; ++j) 
+	//	{
+	//		if (city.grid[i][j] != nullptr) 
+	//		{
+	//			output << city.grid[i][j];
+	//		} 
+	//		else 
+	//		{
+	//			output << "-"; // or appropriate representation for empty space
+	//		}
+	//	}
+	//	output << endl;
+	//}
+	//return output;
+
+	for (int i = 0; i < GRIDSIZE; ++i) {
+		for (int j = 0; j < GRIDSIZE; ++j) {
+			if (city.grid[i][j])
 			{
-				output << city.grid[i][j];
-			} 
-			else 
-			{
-				output << "-"; // or appropriate representation for empty space
+				switch (city.grid[i][j]->getType()) {
+
+				case 'H':
+					output << "H";
+					break;
+				case 'Z':
+					output << "Z";
+					break;
+				case 'B':
+					output << "B";
+					break;
+				case '-':
+					output << "-";
+					break;
+				default:
+					output << "?";
+					break;
+				}
 			}
+
 		}
 		output << endl;
 	}

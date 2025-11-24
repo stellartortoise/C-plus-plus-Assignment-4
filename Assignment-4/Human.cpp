@@ -3,14 +3,16 @@
 
 Human::Human() : Organism() 
 {
-	type = HUMAN_CH;
+	type = 'H';
 
 	city->humans.push_back(this);
 }
 
 Human::Human(City* city, int size) : Organism(city, size) 
 {
-	type = HUMAN_CH;
+	type = 'H';
+
+	city->humans.push_back(this);
 }
 
 Human::~Human() 

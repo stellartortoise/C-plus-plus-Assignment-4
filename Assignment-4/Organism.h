@@ -27,7 +27,7 @@ public:
 	bool getMoved();
 	void setMoved(bool _moved);
 
-	bool getType();
+	char getType();
 
 	friend ostream& operator<<(ostream& output, Organism* organism);
 };

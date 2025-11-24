@@ -3,7 +3,7 @@
 
 Zombie::Zombie() : Organism() 
 {
-	type = ZOMBIE_CH;
+	type = 'Z';
 
 	//add this zombie to the zombies vector in city
 	city->zombies.push_back(this);
@@ -11,7 +11,9 @@ Zombie::Zombie() : Organism()
 
 Zombie::Zombie(City* city, int size) : Organism(city, size) 
 {
-	type = ZOMBIE_CH;
+	type = 'Z';
+
+	city->zombies.push_back(this);
 }
 
 Zombie::~Zombie() 
