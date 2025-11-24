@@ -6,7 +6,7 @@
 class Human : public Organism
 {
 protected:
-	int timeStep;
+	int timeStep = 0;
 public:
 	Human();
 	Human(City* city, int size);

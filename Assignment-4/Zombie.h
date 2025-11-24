@@ -5,6 +5,10 @@
 
 class Zombie : public Organism
 {
+protected:
+	int timeStep =0;
+	bool full = false;
+	int fullTurns = 0;
 public:
 	Zombie();
 	Zombie(City* city, int size);
@@ -13,6 +17,7 @@ public:
 
 	void turn(); //all things a zombie may do on their turn. i.e. an eat/move or a regular move, and if allowed a bite or convert back to human 
 
+	bool shouldCure = false;
 };
 
 #endif

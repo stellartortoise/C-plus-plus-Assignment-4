@@ -25,7 +25,7 @@ City::City() : generation(0)
 				Human* human = new Human(this, 1, i, j);
 				grid[i][j] = human;
 			} 
-			else if (rand() % 100 < 5) // 5% chance to place a Zombie
+			else if (rand() % 100 < 20) // 5% chance to place a Zombie
 			{
 				Zombie* zombie = new Zombie(this, 1, i, j);
 				grid[i][j] = zombie;
@@ -74,6 +74,7 @@ void City::step() {
 			}
 		}
 	}
+	cureZombies();
 	generation++;
 }
 
@@ -172,3 +173,17 @@ void City::countOrganisms(char type)
 }
 
 int City::getGeneration() { return generation; }
+
+void City::cureZombies()
+{
+	for (int i = 0; i < GRIDSIZE; ++i) {
+		for (int j = 0; j < GRIDSIZE; ++j) {
+			Zombie* zombie = dynamic_cast<Zombie*>(grid[i][j]);
+			if (zombie && zombie->shouldCure) {
+				delete zombie;
+				zombie = nullptr;
+				grid[i][j] = new Human(this, 1, i, j);
+			}
+		}
+	}
+}

@@ -34,6 +34,7 @@ public:
 	bool hasDiversity(); //returns true if both humans and zombies exist in the city
 	void countOrganisms(char type); //counts organisms of a given type
 	int getGeneration();
+	void cureZombies(); //converts eligible zombies back to humans
 
 	vector<Human*> humans;
 	vector<Zombie*> zombies;
