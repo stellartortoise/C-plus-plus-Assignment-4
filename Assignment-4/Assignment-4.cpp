@@ -30,9 +30,10 @@ int main() {
         city->step();
         city->reset(); //resets moved flags
         city->countOrganisms('H');// run once for each type
+        city->countOrganisms('Z');// run once for each type
         cout << *city; //prints city
         cout << "GENERATION " << city->getGeneration() << endl;
-        cout << "HUMANS: " << city->countType(HUMAN_CH) << endl;
-        cout << "ZOMBIES: " << city->countType(ZOMBIE_CH) << endl;
+        cout << "HUMANS: " << city->countType('H') << endl;
+        cout << "ZOMBIES: " << city->countType('Z') << endl;
     }//end while
 }//end main

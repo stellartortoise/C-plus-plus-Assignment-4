@@ -3,6 +3,7 @@
 #include <vector>
 #include "Human.h"
 #include "Zombie.h"
+#include <iomanip>
 
 //vector<Human> humans;
 //vector<Zombie> zombies;
@@ -109,53 +110,14 @@ int City::countType(char type)
 	return count;
 }
 
-ostream& operator<<(ostream& output, City& city) 
-{
-	//for (int i = 0; i < GRIDSIZE; ++i) 
-	//{
-	//	for (int j = 0; j < GRIDSIZE; ++j) 
-	//	{
-	//		if (city.grid[i][j] != nullptr) 
-	//		{
-	//			output << city.grid[i][j];
-	//		} 
-	//		else 
-	//		{
-	//			output << "-"; // or appropriate representation for empty space
-	//		}
-	//	}
-	//	output << endl;
-	//}
-	//return output;
-
-	for (int i = 0; i < GRIDSIZE; ++i) {
-		for (int j = 0; j < GRIDSIZE; ++j) {
-			if (city.grid[i][j])
-			{
-				switch (city.grid[i][j]->getType()) {
-
-				case 'H':
-					output << "H";
-					break;
-				case 'Z':
-					output << "Z";
-					break;
-				case 'B':
-					output << "B";
-					break;
-				case '-':
-					output << "-";
-					break;
-				default:
-					output << "?";
-					break;
-				}
-			}
-
-		}
-		output << endl;
-	}
-	return output;
+ostream& operator<<(ostream& output, City& city) {
+    for (int i = 0; i < GRIDSIZE; ++i) {
+        for (int j = 0; j < GRIDSIZE; ++j) {
+            output << std::setw(2) << (city.grid[i][j] ? city.grid[i][j]->getType() : '-');
+        }
+        output << endl;
+    }
+    return output;
 }
 
 void City::col(int c) 
