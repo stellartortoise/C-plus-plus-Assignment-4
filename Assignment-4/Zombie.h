@@ -9,6 +9,8 @@ protected:
 	int timeStep =0;
 	bool full = false;
 	int fullTurns = 0;
+	int starveTurns = 2;
+	bool canInfect = false;
 public:
 	Zombie();
 	Zombie(City* city, int size);
