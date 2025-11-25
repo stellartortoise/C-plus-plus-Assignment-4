@@ -11,6 +11,7 @@ protected:
 	int fullTurns = 0;
 	int starveTurns = 2;
 	bool canInfect = false;
+	bool canBeCured = false;
 public:
 	Zombie();
 	Zombie(City* city, int size);

@@ -134,20 +134,29 @@ void Zombie::turn()
     // After movement/eating logic
     if (full) {
         fullTurns++;
-        if (fullTurns >= starveTurns) {
+        if (fullTurns >= ZOMBIE_STARVE) {
             full = false;
             fullTurns = 0;
         }
     }
 
-    if (!full && timeStep == starveTurns) {
-        shouldCure = true;
+    if (!full && timeStep == ZOMBIE_STARVE) {
+        if (canBeCured) 
+        {
+            shouldCure = true;
+        } else 
+        {
+            // Starve to death
+            city->setOrganism(nullptr, x, y);
+            delete this;
+            return; // Exit as this zombie is deleted
+		}
     }
 
 
     //"Breeding"
 
-    if (timeStep == 7)
+    if (timeStep == ZOMBIE_BREED)
     {
         timeStep = 0;
 		canInfect = true;

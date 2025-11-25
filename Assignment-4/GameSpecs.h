@@ -13,7 +13,7 @@ const char SPACE_CH = 45; // "-" ascii dash for empty elements
 const char ZOMBIE_CH = 90;//90 "Z"// ascii for zombie
 const char BUILDING_CH = 66; //66 "B"// ascii for building
 const int INTERVAL = 300; // millisecond pause between city steps
-const int ITERATIONS = 1000; // max number of steps
+const int ITERATIONS = 100; // max number of steps originally 1000
 
 //Colors
 //0  = black				//9  = bright blue

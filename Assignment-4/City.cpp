@@ -14,29 +14,56 @@ City::City() : generation(0)
 {
 	std::srand(static_cast<unsigned>(std::time(0)));
 
-	// Initialize the grid with nullptrs or empty spaces
-	for (int i = 0; i < GRIDSIZE; ++i) 
+	int startHumans = HUMAN_STARTCOUNT;
+	int startZombies = ZOMBIE_STARTCOUNT;
+
+	while (startHumans > 0) 
 	{
-		for (int j = 0; j < GRIDSIZE; ++j) 
+		int hx = rand() % GRIDSIZE;
+		int hy = rand() % GRIDSIZE;
+		if (grid[hx][hy] == nullptr) 
 		{
-			//Randomly populate the grid with Humans and Zombies or spaces
-			if (rand() % 100 < 20) // 20% chance to place a Human
-			{
-				Human* human = new Human(this, 1, i, j);
-				grid[i][j] = human;
-			} 
-			else if (rand() % 100 < 20) // 5% chance to place a Zombie
-			{
-				Zombie* zombie = new Zombie(this, 1, i, j);
-				grid[i][j] = zombie;
-			} 
-			else 
-			{
-				grid[i][j] = nullptr; // Empty space
-			}
-			
+			Human* human = new Human(this, 1, hx, hy);
+			grid[hx][hy] = human;
+			startHumans--;
 		}
 	}
+
+	while (startZombies > 0) 
+	{
+		int zx = rand() % GRIDSIZE;
+		int zy = rand() % GRIDSIZE;
+		if (grid[zx][zy] == nullptr) 
+		{
+			Zombie* zombie = new Zombie(this, 1, zx, zy);
+			grid[zx][zy] = zombie;
+			startZombies--;
+		}
+	}
+
+	// Initialize the grid with nullptrs or empty spaces
+	//for (int i = 0; i < GRIDSIZE; ++i) 
+	//{
+	//	for (int j = 0; j < GRIDSIZE; ++j) 
+	//	{
+	//		//Randomly populate the grid with Humans and Zombies or spaces
+	//		if (rand() % 100 < 20) // 20% chance to place a Human
+	//		{
+	//			Human* human = new Human(this, 1, i, j);
+	//			grid[i][j] = human;
+	//		} 
+	//		else if (rand() % 100 < 20) // 5% chance to place a Zombie
+	//		{
+	//			Zombie* zombie = new Zombie(this, 1, i, j);
+	//			grid[i][j] = zombie;
+	//		} 
+	//		else 
+	//		{
+	//			grid[i][j] = nullptr; // Empty space
+	//		}
+	//		
+	//	}
+	//}
 }
 
 City::~City() 
