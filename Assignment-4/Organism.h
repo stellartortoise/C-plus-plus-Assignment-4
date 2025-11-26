@@ -27,6 +27,12 @@ public:
 	bool getMoved();
 	void setMoved(bool _moved);
 
+	int GetX() const { return x; }
+	int GetY() const { return y; }
+
+	int SetX(int newX) { x = newX; return x; }
+	int SetY(int newY) { y = newY; return y; }
+
 	char getType();
 
 	friend ostream& operator<<(ostream& output, Organism* organism);

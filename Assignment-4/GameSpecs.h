@@ -5,6 +5,7 @@
 const int GRIDSIZE = 20; // size of the square grid
 const int HUMAN_STARTCOUNT = 100; // inital Humans
 const int ZOMBIE_STARTCOUNT = 5; //initial Zombie count
+const int BUILDING_COUNT = 10; // number of buildings in the city
 const int HUMAN_BREED = 3; // steps until an Human breeds
 const int ZOMBIE_BREED = 8; // steps until an Zombie breeds
 const int ZOMBIE_STARVE = 3; // steps until a Zombie starves and converts back
@@ -28,6 +29,8 @@ const int ITERATIONS = 100; // max number of steps originally 1000
 
 const int HUMAN_COLOR = 6; // turquoise
 const int ZOMBIE_COLOR = 2; // bright yellow
+const int BUILDING_COLOR_UNOCCUPIED = 1; // blue
+const int BUILDING_COLOR_OCCUPIED = 4; // red
 const int DASH_COLOR = 8; // pale white
 
 #endif

@@ -1,5 +1,6 @@
 #include "City.h"
 #include "Organism.h" // Add this include to fix incomplete type error
+#include "Building.h"
 #include <vector>
 #include "Human.h"
 #include "Zombie.h"
@@ -16,6 +17,28 @@ City::City() : generation(0)
 
 	int startHumans = HUMAN_STARTCOUNT;
 	int startZombies = ZOMBIE_STARTCOUNT;
+	int buildingsToPlace = BUILDING_COUNT;
+
+	//initialize grid to nullptr
+	for (int i = 0; i < GRIDSIZE; ++i) 
+	{
+		for (int j = 0; j < GRIDSIZE; ++j) 
+		{
+			grid[i][j] = nullptr;
+		}
+	}
+
+	while (buildingsToPlace > 0) 
+	{
+		int bx = rand() % GRIDSIZE;
+		int by = rand() % GRIDSIZE;
+		if (grid[bx][by] == nullptr) 
+		{
+			Building* building = new Building(this, 1, bx, by);
+			grid[bx][by] = building;
+			buildingsToPlace--;
+		}
+	}
 
 	while (startHumans > 0) 
 	{
@@ -120,9 +143,10 @@ void City::reset()
 	}
 }
 
+
 int City::countType(char type) 
 {
-	int count = 0;
+	size_t count = 0;
 	
 	switch (type) 
 	{
@@ -148,15 +172,54 @@ void City::col(int c)
 
 ostream& operator<<(ostream& output, City& city) 
 {
-    for (int i = 0; i < GRIDSIZE; ++i) 
+ //   for (int i = 0; i < GRIDSIZE; ++i) 
+	//{
+ //       for (int j = 0; j < GRIDSIZE; ++j) 
+	//	{
+	//		city.col(city.grid[i][j] ? (city.grid[i][j]->getType() == 'H' ? HUMAN_COLOR : ZOMBIE_COLOR) : DASH_COLOR);
+ //           output << std::setw(2) << (city.grid[i][j] ? city.grid[i][j]->getType() : '-');
+ //       }
+ //       output << endl;
+ //   }
+	for (int i = 0; i < GRIDSIZE; ++i)
 	{
-        for (int j = 0; j < GRIDSIZE; ++j) 
+		for (int j = 0; j < GRIDSIZE; ++j)
 		{
-			city.col(city.grid[i][j] ? (city.grid[i][j]->getType() == 'H' ? HUMAN_COLOR : ZOMBIE_COLOR) : DASH_COLOR);
-            output << std::setw(2) << (city.grid[i][j] ? city.grid[i][j]->getType() : '-');
-        }
-        output << endl;
-    }
+			Organism* org = city.grid[i][j];
+			if (org) {
+				// Check if it's a Building
+				Building* building = dynamic_cast<Building*>(org);
+				if (building) {
+					if (building->isOccupied()) {
+						city.col(BUILDING_COLOR_OCCUPIED); // Define this color
+						output << std::setw(2) << 'B';     // 'B' for occupied building
+					}
+					else {
+						city.col(BUILDING_COLOR_UNOCCUPIED);    // Define this color
+						output << std::setw(2) << 'b';     // 'b' for empty building
+					}
+				}
+				else if (org->getType() == 'H') {
+					city.col(HUMAN_COLOR);
+					output << std::setw(2) << 'H';
+				}
+				else if (org->getType() == 'Z') {
+					city.col(ZOMBIE_COLOR);
+					output << std::setw(2) << 'Z';
+				}
+				else {
+					city.col(DASH_COLOR);
+					output << std::setw(2) << org->getType();
+				}
+			}
+			else {
+				city.col(DASH_COLOR);
+				output << std::setw(2) << '-';
+			}
+		}
+		output << endl;
+	}
+
     return output;
 }
 
@@ -181,7 +244,7 @@ void City::countOrganisms(char type)
 	/*int count = humans.size() + zombies.size();
 	*/
 
-	int count = 0;
+	size_t count = 0;
 
 	switch (type)
 	{

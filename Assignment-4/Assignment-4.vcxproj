@@ -124,12 +124,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Assignment-4.cpp" />
+    <ClCompile Include="Building.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="Organism.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Building.h" />
     <ClInclude Include="City.h" />
     <ClInclude Include="GameSpecs.h" />
     <ClInclude Include="Human.h" />
