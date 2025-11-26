@@ -24,7 +24,7 @@ Building::~Building()
 
 void Building::shelterHuman(Human* shelteree)
 {
-    if (shelteree && shelteredHumans.size() < static_cast<size_t>(maxCapacity))
+    if (shelteree && shelteredHumans.size() < (size_t)maxCapacity)
     {
         shelteredHumans.push_back(shelteree);
         shelteree->isSheltered = true;
@@ -55,7 +55,7 @@ void Building::releaseHuman()
 
         if (!freeSpaces.empty())
         {
-            int randIndex = rand() % static_cast<int>(freeSpaces.size());
+            int randIndex = rand() % (int)freeSpaces.size();
             auto newPos = freeSpaces[randIndex];
             releasedHuman->SetX(newPos.first);
             releasedHuman->SetY(newPos.second);
@@ -87,7 +87,7 @@ void Building::turn()
     }
 
     // If we released this turn, don't immediately shelter again (lets UI show blue)
-    if (!didRelease && shelteredHumans.size() < static_cast<size_t>(maxCapacity))
+    if (!didRelease && shelteredHumans.size() < (size_t)maxCapacity)
     {
         // check all 8 neighbors for a human (not empty)
         int dx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
@@ -111,14 +111,14 @@ void Building::turn()
 
         if (!humanNeighbors.empty())
         {
-            int idx = rand() % static_cast<int>(humanNeighbors.size());
-            auto pos = humanNeighbors[idx];
-            Organism* occ = city->getOrganism(pos.first, pos.second);
-            if (occ && occ->getType() == 'H')
+            int index = rand() % (int)humanNeighbors.size();
+            auto position = humanNeighbors[index];
+            Organism* occupier = city->getOrganism(position.first, position.second);
+            if (occupier && occupier->getType() == 'H')
             {
-                if (Human* h = dynamic_cast<Human*>(occ))
+                if (Human* human = (Human*)occupier)
                 {
-                    shelterHuman(h);
+                    shelterHuman(human);
                 }
             }
         }

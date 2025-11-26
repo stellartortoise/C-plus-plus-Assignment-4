@@ -38,4 +38,25 @@ int main() {
         cout << "HUMANS: " << city->countType('H') << endl;
         cout << "ZOMBIES: " << city->countType('Z') << endl;
     }//end while
+
+    if (city->getGeneration() >= ITERATIONS) {
+		city->col(10); //set color to bright green for success message
+        cout << "SUCCESS! Balanced Simulation Achieved." << endl;
+    } else {
+		city->col(12); //set color to bright red for failure message
+        cout << "FAIL! ELE Occured." << endl;
+	}
+	//reset color to default
+    city->col(15); //set color to bright white for output
+
+	cout << "Run again? (y/n): " << endl;
+	char response;
+	cin >> response;
+    if (response == 'y' || response == 'Y') {
+        delete city;
+        main(); //restart the simulation
+    } else {
+        delete city;
+        return 0;
+	}
 }//end main

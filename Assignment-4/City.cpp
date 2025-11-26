@@ -188,8 +188,10 @@ ostream& operator<<(ostream& output, City& city)
 			Organism* org = city.grid[i][j];
 			if (org) {
 				// Check if it's a Building
-				Building* building = dynamic_cast<Building*>(org);
-				if (building) {
+				//Building* building = dynamic_cast<Building*>(org);
+				
+				if (org->getType() == 'B') {
+					Building* building = (Building*)org;
 					if (building->isOccupied()) {
 						city.col(BUILDING_COLOR_OCCUPIED); // Define this color
 						output << std::setw(2) << 'B';     
