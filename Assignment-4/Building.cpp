@@ -61,25 +61,33 @@ void Building::releaseHuman()
             releasedHuman->SetY(newPos.second);
             city->setOrganism(releasedHuman, newPos.first, newPos.second);
         }
-        // else: nowhere to place; remain sheltered (optional: push back into shelteredHumans)
+        else
+        {
+            // No space to release; keep sheltered (so state remains consistent)
+            releasedHuman->isSheltered = true;
+            shelteredHumans.push_back(releasedHuman);
+        }
     }
 }
 
 void Building::turn()
 {
-    // Optional: chance to release a sheltered human
     int stayPercentage = 50; // 50% chance to stay sheltered
+
+    bool didRelease = false;
     if (!shelteredHumans.empty())
     {
         int roll = rand() % 100;
         if (roll >= stayPercentage)
         {
+            size_t before = shelteredHumans.size();
             releaseHuman();
+            didRelease = (shelteredHumans.size() < before);
         }
     }
 
-    // Try to shelter an adjacent human if capacity allows
-    if (shelteredHumans.size() < static_cast<size_t>(maxCapacity))
+    // If we released this turn, don't immediately shelter again (lets UI show blue)
+    if (!didRelease && shelteredHumans.size() < static_cast<size_t>(maxCapacity))
     {
         // check all 8 neighbors for a human (not empty)
         int dx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
@@ -108,14 +116,15 @@ void Building::turn()
             Organism* occ = city->getOrganism(pos.first, pos.second);
             if (occ && occ->getType() == 'H')
             {
-                Human* h = dynamic_cast<Human*>(occ);
-                if (h)
+                if (Human* h = dynamic_cast<Human*>(occ))
                 {
                     shelterHuman(h);
                 }
             }
         }
     }
+
+    setMoved(true);
 }
 
 bool Building::isOccupied()

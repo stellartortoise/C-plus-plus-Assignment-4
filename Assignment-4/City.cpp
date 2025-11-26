@@ -192,11 +192,11 @@ ostream& operator<<(ostream& output, City& city)
 				if (building) {
 					if (building->isOccupied()) {
 						city.col(BUILDING_COLOR_OCCUPIED); // Define this color
-						output << std::setw(2) << 'B';     // 'B' for occupied building
+						output << std::setw(2) << 'B';     
 					}
 					else {
 						city.col(BUILDING_COLOR_UNOCCUPIED);    // Define this color
-						output << std::setw(2) << 'b';     // 'b' for empty building
+						output << std::setw(2) << 'B';     
 					}
 				}
 				else if (org->getType() == 'H') {
