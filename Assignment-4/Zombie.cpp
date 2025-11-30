@@ -7,6 +7,8 @@ Zombie::Zombie() : Organism()
 
 	//add this zombie to the zombies vector in city
 	city->zombies.push_back(this);
+
+    canBeCured = city->zombiesCanStarve;
 }
 
 Zombie::Zombie(City* city, int size) : Organism(city, size) 
@@ -14,12 +16,16 @@ Zombie::Zombie(City* city, int size) : Organism(city, size)
 	type = 'Z';
 
 	city->zombies.push_back(this);
+
+	canBeCured = city->zombiesCanStarve;
 }
 
 Zombie::Zombie(City* city, int size, int x, int y) : Organism(city, size, x, y) 
 {
 	type = 'Z';
 	city->zombies.push_back(this);
+
+    canBeCured = city->zombiesCanStarve;
 }
 
 Zombie::~Zombie() 
@@ -148,6 +154,7 @@ void Zombie::turn()
         {
             // Starve to death
             city->setOrganism(nullptr, x, y);
+            setMoved(true);
             delete this;
             return; // Exit as this zombie is deleted
 		}

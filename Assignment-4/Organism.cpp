@@ -24,26 +24,6 @@ char Organism::getType() {
 
 ostream& operator<<(ostream& output, Organism* organism) {
 
-	//switch (organism->type) 
-	//{
-	//	
-	//	case HUMAN_CH:
-	//		output << "H";
-	//		break;
-	//	case ZOMBIE_CH:
-	//		output << "Z";
-	//		break;
-	//	case BUILDING_CH:
-	//		output << "B";
-	//		break;
-	//	case SPACE_CH:
-	//		output << "-";
-	//		break;
-	//	default:
-	//		output << "?";
-	//		break;
-	//}
-
 	output << organism->type;
 
 	return output;

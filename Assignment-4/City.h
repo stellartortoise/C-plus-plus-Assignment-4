@@ -4,40 +4,46 @@
 #include <iostream>
 #include "GameSpecs.h"
 #include <vector>
-#include "Human.h"
-#include "Zombie.h"
 
 using namespace std;
 
+// Forward declarations
 class Organism;
+class Human;
+class Zombie;
 
 class City
 {
 protected:
-	Organism* grid[GRIDSIZE][GRIDSIZE];
-	int generation;
+    Organism* grid[GRIDSIZE][GRIDSIZE];
+    int generation;
 
 public:
-	City();
-	virtual ~City();
+    City();
+    virtual ~City();
 
-	Organism* getOrganism(int x, int y);
-	void setOrganism(Organism* organism, int x, int y);
+    void CitySetup(bool _zombiesCurable, bool _buildingsExist);
 
-	void step(); //includes all actions except reset, counting, and printing in this solution.
-	void reset();
-	int countType(char);
-	friend ostream& operator<<(ostream& output, City& city);
+    Organism* getOrganism(int x, int y);
+    void setOrganism(Organism* organism, int x, int y);
 
-	void col(int c);   //for colors
+    void step();
+    void reset();
+    int countType(char);
+    friend ostream& operator<<(ostream& output, City& city);
 
-	bool hasDiversity(); //returns true if both humans and zombies exist in the city
-	void countOrganisms(char type); //counts organisms of a given type
-	int getGeneration();
-	void cureZombies(); //converts eligible zombies back to humans
+    void col(int c);
 
-	vector<Human*> humans;
-	vector<Zombie*> zombies;
+    bool hasDiversity();
+    void countOrganisms(char type);
+    int getGeneration();
+    void cureZombies();
+
+    vector<Human*> humans;
+    vector<Zombie*> zombies;
+
+    bool zombiesCanStarve = false;
+    bool buildingsExist = false;
 };
 
 #endif

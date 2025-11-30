@@ -21,9 +21,52 @@ void ClearScreen()
     //cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 }
 
+void SetUp(City* city) 
+{
+	cout << "ZOMBIES VS HUMANS SIMULATION" << endl;
+	cout << "============================" << endl;
+
+	cout << "Humans (H) try to survive by breeding and seeking shelter in buildings (B)." << endl;
+	cout << "Zombies (Z) hunt Humans to infect them and convert them into more Zombies." << endl;
+
+	cout << "The simulation runs until either all Humans are infected (ELE) or a balanced state is achieved after " << ITERATIONS << " generations.\n" << endl;
+      
+	cout << "Should Zombies be cured after starving? (y/n): " << endl;
+	char response;
+	cin >> response;
+    if (response == 'y' || response == 'Y') 
+    {
+        cout << "Zombies will be cured after starving.\n" << endl;
+		city->zombiesCanStarve = true;
+    } 
+    else 
+    {
+        cout << "Zombies will NOT be cured after starving.\n" << endl;
+		city->zombiesCanStarve = false;
+    }
+
+	cout << "Should buildings exist for Humans to take shelter in? (y/n): " << endl;
+    cin >> response;
+    if (response == 'y' || response == 'Y') 
+    {
+		cout << "Buildings exist.\n" << endl;
+		city->buildingsExist = true;
+    } 
+    else
+    {
+        cout << "There are no buildings.\n" << endl;
+		city->buildingsExist = false;
+    }
+
+	city->CitySetup(city->zombiesCanStarve, city->buildingsExist);
+}
+
 int main() {
     City* city = new City();
     chrono::milliseconds interval(INTERVAL);
+
+	SetUp(city);
+	ClearScreen();
 
     while (city->hasDiversity() && city->getGeneration() < ITERATIONS) { //while both humans and zombies exist
         this_thread::sleep_for(interval);
@@ -37,6 +80,9 @@ int main() {
         cout << "GENERATION " << city->getGeneration() << endl;
         cout << "HUMANS: " << city->countType('H') << endl;
         cout << "ZOMBIES: " << city->countType('Z') << endl;
+		cout << "\n" << endl;
+		cout << "Zombies Can be Cured?: " << (city->zombiesCanStarve ? "Yes" : "No") << endl;
+		cout << "Buildings Exist?: " << (city->buildingsExist ? "Yes" : "No") << endl;
     }//end while
 
     if (city->getGeneration() >= ITERATIONS) {
@@ -54,6 +100,7 @@ int main() {
 	cin >> response;
     if (response == 'y' || response == 'Y') {
         delete city;
+        ClearScreen();
         main(); //restart the simulation
     } else {
         delete city;

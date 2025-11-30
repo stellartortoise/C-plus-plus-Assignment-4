@@ -19,7 +19,11 @@ Building::Building(City* city, int size, int x, int y) : Organism(city, size, x,
 
 Building::~Building()
 {
-    // No dynamic memory to clean up in Building
+    for (Human* h : shelteredHumans)
+    {
+        delete h;
+    }
+    shelteredHumans.clear();
 }
 
 void Building::shelterHuman(Human* shelteree)

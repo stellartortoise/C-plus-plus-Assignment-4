@@ -1,9 +1,9 @@
 #include "City.h"
-#include "Organism.h" // Add this include to fix incomplete type error
-#include "Building.h"
-#include <vector>
 #include "Human.h"
 #include "Zombie.h"
+#include "Building.h"
+#include "Organism.h"
+#include <vector>
 #include <iomanip>
 #include <windows.h>
 #include <ctime>
@@ -11,15 +11,90 @@
 //vector<Human> humans;
 //vector<Zombie> zombies;
 
+//City::City() : generation(0)
+//{
+//	std::srand(static_cast<unsigned>(std::time(0))); // <-- AI Coded
+//
+//	int startHumans = HUMAN_STARTCOUNT;
+//	int startZombies = ZOMBIE_STARTCOUNT;
+//	int buildingsToPlace = BUILDING_COUNT;
+//
+//	//initialize grid to nullptr
+//	for (int i = 0; i < GRIDSIZE; ++i)
+//	{
+//		for (int j = 0; j < GRIDSIZE; ++j)
+//		{
+//			grid[i][j] = nullptr;
+//		}
+//	}
+//
+//	if (buildingsExist)
+//	{
+//		while (buildingsToPlace > 0)
+//		{
+//			int bx = rand() % GRIDSIZE;
+//			int by = rand() % GRIDSIZE;
+//			if (grid[bx][by] == nullptr)
+//			{
+//				Building* building = new Building(this, 1, bx, by);
+//				grid[bx][by] = building;
+//				buildingsToPlace--;
+//			}
+//		}
+//	}
+//
+//	while (startHumans > 0) 
+//	{
+//		int hx = rand() % GRIDSIZE;
+//		int hy = rand() % GRIDSIZE;
+//		if (grid[hx][hy] == nullptr) 
+//		{
+//			Human* human = new Human(this, 1, hx, hy);
+//			grid[hx][hy] = human;
+//			startHumans--;
+//		}
+//	}
+//
+//	while (startZombies > 0) 
+//	{
+//		int zx = rand() % GRIDSIZE;
+//		int zy = rand() % GRIDSIZE;
+//		if (grid[zx][zy] == nullptr) 
+//		{
+//			Zombie* zombie = new Zombie(this, 1, zx, zy);
+//			grid[zx][zy] = zombie;
+//			startZombies--;
+//		}
+//	}
+//
+//	// Initialize the grid with nullptrs or empty spaces
+//	//for (int i = 0; i < GRIDSIZE; ++i) 
+//	//{
+//	//	for (int j = 0; j < GRIDSIZE; ++j) 
+//	//	{
+//	//		//Randomly populate the grid with Humans and Zombies or spaces
+//	//		if (rand() % 100 < 20) // 20% chance to place a Human
+//	//		{
+//	//			Human* human = new Human(this, 1, i, j);
+//	//			grid[i][j] = human;
+//	//		} 
+//	//		else if (rand() % 100 < 20) // 5% chance to place a Zombie
+//	//		{
+//	//			Zombie* zombie = new Zombie(this, 1, i, j);
+//	//			grid[i][j] = zombie;
+//	//		} 
+//	//		else 
+//	//		{
+//	//			grid[i][j] = nullptr; // Empty space
+//	//		}
+//	//		
+//	//	}
+//	//}
+//}
+
 City::City() : generation(0) 
 {
-	std::srand(static_cast<unsigned>(std::time(0)));
-
-	int startHumans = HUMAN_STARTCOUNT;
-	int startZombies = ZOMBIE_STARTCOUNT;
-	int buildingsToPlace = BUILDING_COUNT;
-
-	//initialize grid to nullptr
+	// Initialize grid to nullptr
 	for (int i = 0; i < GRIDSIZE; ++i) 
 	{
 		for (int j = 0; j < GRIDSIZE; ++j) 
@@ -27,24 +102,46 @@ City::City() : generation(0)
 			grid[i][j] = nullptr;
 		}
 	}
+}
 
-	while (buildingsToPlace > 0) 
+void City::CitySetup(bool _zombiesCurable, bool _buildingsExist) // Did this so that the user variables to be accounted in the city grid set up
+{
+
+	std::srand(static_cast<unsigned>(std::time(0))); // <-- AI Coded
+
+	int startHumans = HUMAN_STARTCOUNT;
+	int startZombies = ZOMBIE_STARTCOUNT;
+	int buildingsToPlace = BUILDING_COUNT;
+
+	//initialize grid to nullptr
+	for (int i = 0; i < GRIDSIZE; ++i)
 	{
-		int bx = rand() % GRIDSIZE;
-		int by = rand() % GRIDSIZE;
-		if (grid[bx][by] == nullptr) 
+		for (int j = 0; j < GRIDSIZE; ++j)
 		{
-			Building* building = new Building(this, 1, bx, by);
-			grid[bx][by] = building;
-			buildingsToPlace--;
+			grid[i][j] = nullptr;
 		}
 	}
 
-	while (startHumans > 0) 
+	if (buildingsExist)
+	{
+		while (buildingsToPlace > 0)
+		{
+			int bx = rand() % GRIDSIZE;
+			int by = rand() % GRIDSIZE;
+			if (grid[bx][by] == nullptr)
+			{
+				Building* building = new Building(this, 1, bx, by);
+				grid[bx][by] = building;
+				buildingsToPlace--;
+			}
+		}
+	}
+
+	while (startHumans > 0)
 	{
 		int hx = rand() % GRIDSIZE;
 		int hy = rand() % GRIDSIZE;
-		if (grid[hx][hy] == nullptr) 
+		if (grid[hx][hy] == nullptr)
 		{
 			Human* human = new Human(this, 1, hx, hy);
 			grid[hx][hy] = human;
@@ -52,53 +149,32 @@ City::City() : generation(0)
 		}
 	}
 
-	while (startZombies > 0) 
+	while (startZombies > 0)
 	{
 		int zx = rand() % GRIDSIZE;
 		int zy = rand() % GRIDSIZE;
-		if (grid[zx][zy] == nullptr) 
+		if (grid[zx][zy] == nullptr)
 		{
 			Zombie* zombie = new Zombie(this, 1, zx, zy);
 			grid[zx][zy] = zombie;
 			startZombies--;
 		}
 	}
-
-	// Initialize the grid with nullptrs or empty spaces
-	//for (int i = 0; i < GRIDSIZE; ++i) 
-	//{
-	//	for (int j = 0; j < GRIDSIZE; ++j) 
-	//	{
-	//		//Randomly populate the grid with Humans and Zombies or spaces
-	//		if (rand() % 100 < 20) // 20% chance to place a Human
-	//		{
-	//			Human* human = new Human(this, 1, i, j);
-	//			grid[i][j] = human;
-	//		} 
-	//		else if (rand() % 100 < 20) // 5% chance to place a Zombie
-	//		{
-	//			Zombie* zombie = new Zombie(this, 1, i, j);
-	//			grid[i][j] = zombie;
-	//		} 
-	//		else 
-	//		{
-	//			grid[i][j] = nullptr; // Empty space
-	//		}
-	//		
-	//	}
-	//}
 }
 
 City::~City() 
 {
-	// Clean up dynamically allocated organisms
-	for (int i = 0; i < GRIDSIZE; ++i) 
-	{
-		for (int j = 0; j < GRIDSIZE; ++j) 
-		{
-			delete grid[i][j];
+    for (int i = 0; i < GRIDSIZE; ++i) 
+    {
+        for (int j = 0; j < GRIDSIZE; ++j) 
+        {
+            delete grid[i][j]; // This will NOT delete sheltered humans
+			grid[i][j] = nullptr;
 		}
-	}
+    }
+
+	humans.clear();
+	zombies.clear();
 }
 
 Organism* City::getOrganism(int x, int y) 
@@ -194,20 +270,22 @@ ostream& operator<<(ostream& output, City& city)
 					Building* building = (Building*)org;
 					if (building->isOccupied()) {
 						city.col(BUILDING_COLOR_OCCUPIED); // Define this color
-						output << std::setw(2) << 'B';     
+						output << std::setw(2) << building;     
 					}
 					else {
 						city.col(BUILDING_COLOR_UNOCCUPIED);    // Define this color
-						output << std::setw(2) << 'B';     
+						output << std::setw(2) << building;     
 					}
 				}
 				else if (org->getType() == 'H') {
+					Human* human = (Human*)org;
 					city.col(HUMAN_COLOR);
-					output << std::setw(2) << 'H';
+					output << std::setw(2) << human;
 				}
 				else if (org->getType() == 'Z') {
+					Zombie* zombie = (Zombie*)org;
 					city.col(ZOMBIE_COLOR);
-					output << std::setw(2) << 'Z';
+					output << std::setw(2) << zombie;
 				}
 				else {
 					city.col(DASH_COLOR);
@@ -270,7 +348,13 @@ void City::cureZombies()
 {
 	for (int i = 0; i < GRIDSIZE; ++i) {
 		for (int j = 0; j < GRIDSIZE; ++j) {
-			Zombie* zombie = dynamic_cast<Zombie*>(grid[i][j]);
+			//Zombie* zombie = dynamic_cast<Zombie*>(grid[i][j]);
+
+			if (!grid[i][j] || grid[i][j]->getType() != 'Z') {
+				continue; // Not a zombie, skip
+			}
+			
+			Zombie* zombie = (Zombie*)grid[i][j];
 			if (zombie && zombie->shouldCure) {
 				delete zombie;
 				zombie = nullptr;
