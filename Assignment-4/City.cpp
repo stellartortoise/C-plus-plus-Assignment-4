@@ -188,8 +188,7 @@ void City::setOrganism(Organism* organism, int x, int y)
 }
 
 void City::step() {
-	// Implement the logic to perform a step in the simulation
-	// This typically involves calling the turn method of each organism
+
 	for (int i = 0; i < GRIDSIZE; ++i) 
 	{
 		for (int j = 0; j < GRIDSIZE; ++j) 
@@ -266,33 +265,40 @@ ostream& operator<<(ostream& output, City& city)
 				// Check if it's a Building
 				//Building* building = dynamic_cast<Building*>(org);
 				
-				if (org->getType() == 'B') {
+				if (org->getType() == 'B') 
+				{
 					Building* building = (Building*)org;
-					if (building->isOccupied()) {
+					if (building->isOccupied()) 
+					{
 						city.col(BUILDING_COLOR_OCCUPIED); // Define this color
 						output << std::setw(2) << building;     
 					}
-					else {
+					else 
+					{
 						city.col(BUILDING_COLOR_UNOCCUPIED);    // Define this color
 						output << std::setw(2) << building;     
 					}
 				}
-				else if (org->getType() == 'H') {
+				else if (org->getType() == 'H') 
+				{
 					Human* human = (Human*)org;
 					city.col(HUMAN_COLOR);
 					output << std::setw(2) << human;
 				}
-				else if (org->getType() == 'Z') {
+				else if (org->getType() == 'Z') 
+				{
 					Zombie* zombie = (Zombie*)org;
 					city.col(ZOMBIE_COLOR);
 					output << std::setw(2) << zombie;
 				}
-				else {
+				else 
+				{
 					city.col(DASH_COLOR);
 					output << std::setw(2) << org->getType();
 				}
 			}
-			else {
+			else 
+			{
 				city.col(DASH_COLOR);
 				output << std::setw(2) << '-';
 			}
@@ -328,15 +334,15 @@ void City::countOrganisms(char type)
 
 	switch (type)
 	{
-	case 'H':
-		count = humans.size();
-		break;
-	case 'Z':
-		count = zombies.size();
-		break;
-	default:
-		count = 0;
-		break;
+		case 'H':
+			count = humans.size();
+			break;
+		case 'Z':
+			count = zombies.size();
+			break;
+		default:
+			count = 0;
+			break;
 	}
 
 	cout << "Count of type " << type << ": " << count << endl;
@@ -346,16 +352,19 @@ int City::getGeneration() { return generation; }
 
 void City::cureZombies()
 {
-	for (int i = 0; i < GRIDSIZE; ++i) {
-		for (int j = 0; j < GRIDSIZE; ++j) {
-			//Zombie* zombie = dynamic_cast<Zombie*>(grid[i][j]);
+	for (int i = 0; i < GRIDSIZE; ++i) 
+	{
+		for (int j = 0; j < GRIDSIZE; ++j) 
+		{
 
-			if (!grid[i][j] || grid[i][j]->getType() != 'Z') {
+			if (!grid[i][j] || grid[i][j]->getType() != 'Z') 
+			{
 				continue; // Not a zombie, skip
 			}
 			
 			Zombie* zombie = (Zombie*)grid[i][j];
-			if (zombie && zombie->shouldCure) {
+			if (zombie && zombie->shouldCure) 
+			{
 				delete zombie;
 				zombie = nullptr;
 				grid[i][j] = new Human(this, 1, i, j);

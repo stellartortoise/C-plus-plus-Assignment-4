@@ -63,7 +63,7 @@ void Human::turn()
 
 	// Recruiting/Breeding (if conditions are met, recruit a new Human in an adjacent empty cell)
 
-	if (timeStep == 2)
+	if (timeStep == HUMAN_BREED - 1)
 	{
 		timeStep = 0;
 
@@ -90,6 +90,10 @@ void Human::turn()
 			// Spawn Human at new position
 			Human* newHuman = new Human(city, 1, newPos.first, newPos.second);
 			city->setOrganism(newHuman, newPos.first, newPos.second);
+		}
+		else
+		{
+			timeStep = 0; // Reset breeding counter if no space to breed
 		}
 	}
 	else

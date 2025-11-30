@@ -53,7 +53,8 @@ void Zombie::turn()
         int dx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
         int dy[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
-        for (int dir = 0; dir < 8; ++dir) {
+        for (int dir = 0; dir < 8; ++dir) 
+        {
             int nx = x + dx[dir];
             int ny = y + dy[dir];
 
@@ -65,7 +66,8 @@ void Zombie::turn()
                 {
                     //continue; // Cell is occupied
 
-                    if (target->getType() == 'H') {
+                    if (target->getType() == 'H') 
+                    {
                         humanTargets.push_back({ nx, ny });
                     }
                     // If it's a zombie, do nothing
@@ -104,9 +106,12 @@ void Zombie::turn()
         if (nx >= 0 && nx < GRIDSIZE && ny >= 0 && ny < GRIDSIZE) 
         {
             Organism* target = city->getOrganism(nx, ny);
-            if (!target) {
+            if (!target) 
+            {
                 freeSpaces.push_back({ nx, ny });
-            } else if (target->getType() == 'H') {
+            } 
+            else if (target->getType() == 'H') 
+            {
                 humanTargets.push_back({ nx, ny });
             }
             // If it's a zombie, do nothing
@@ -138,19 +143,30 @@ void Zombie::turn()
     }
 
     // After movement/eating logic
-    if (full) {
-        fullTurns++;
-        if (fullTurns >= ZOMBIE_STARVE) {
-            full = false;
-            fullTurns = 0;
-        }
+    if (full) 
+    {
+        fullTurns = ZOMBIE_STARVE - 1;
+        full = false;
     }
 
-    if (!full && timeStep == ZOMBIE_STARVE) {
+    if (fullTurns > 0) {
+        fullTurns--;
+	}
+
+    //if (full) {
+    //    fullTurns++;
+    //    if (fullTurns >= ZOMBIE_STARVE - 1) {
+    //        full = false;
+    //        fullTurns = 0;
+    //    }
+    //}
+
+    if (fullTurns <= 0) {
         if (canBeCured) 
         {
             shouldCure = true;
-        } else 
+        } 
+        else 
         {
             // Starve to death
             city->setOrganism(nullptr, x, y);
@@ -163,10 +179,13 @@ void Zombie::turn()
 
     //"Breeding"
 
-    if (timeStep == ZOMBIE_BREED)
+    if (timeStep == ZOMBIE_BREED - 1)
     {
         timeStep = 0;
-		canInfect = true;
+        if (!canInfect) 
+        { 
+            canInfect = true;
+        }
     }
     else
     {
