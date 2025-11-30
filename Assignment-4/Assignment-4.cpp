@@ -15,6 +15,14 @@
 
 using namespace std;
 
+int successCount = 0;
+int totalRuns = 0;
+
+int successRate() {
+    if (totalRuns == 0) return 0;
+    return (successCount * 100) / totalRuns;
+}
+
 void ClearScreen()
 {
 	system("CLS");
@@ -73,36 +81,44 @@ int main() {
         ClearScreen();
         city->step();
         city->reset(); //resets moved flags
-        city->countOrganisms('H');// run once for each type
-        city->countOrganisms('Z');// run once for each type
+        //city->countOrganisms('H');// run once for each type
+        //city->countOrganisms('Z');// run once for each type
         cout << *city; //prints city
         city->col(15); //set color to bright white for output
         cout << "GENERATION " << city->getGeneration() << endl;
         cout << "HUMANS: " << city->countType('H') << endl;
         cout << "ZOMBIES: " << city->countType('Z') << endl;
 		cout << "\n" << endl;
-		cout << "Zombies Can be Cured?: " << (city->zombiesCanStarve ? "Yes" : "No") << endl;
-		cout << "Buildings Exist?: " << (city->buildingsExist ? "Yes" : "No") << endl;
+		cout << "ZOMBIES CAN BE CURED?: " << (city->zombiesCanStarve ? "Yes" : "No") << endl;
+		cout << "BUILDINGS EXIST?: " << (city->buildingsExist ? "Yes" : "No") << endl;
+		totalRuns != 0 ? cout << "SUCCESS RATE: " << successRate() << "% (" << successCount << " out of " << totalRuns << " runs)" << endl : cout << "No complete runs yet" << endl;
     }//end while
 
-    if (city->getGeneration() >= ITERATIONS) {
+    if (city->getGeneration() >= ITERATIONS) 
+    {
 		city->col(10); //set color to bright green for success message
+		successCount++;
         cout << "SUCCESS! Balanced Simulation Achieved." << endl;
-    } else {
+    } else 
+    {
 		city->col(12); //set color to bright red for failure message
         cout << "FAIL! ELE Occured." << endl;
 	}
+	totalRuns++;
 	//reset color to default
     city->col(15); //set color to bright white for output
 
 	cout << "Run again? (y/n): " << endl;
 	char response;
 	cin >> response;
-    if (response == 'y' || response == 'Y') {
+    if (response == 'y' || response == 'Y') 
+    {
         delete city;
         ClearScreen();
         main(); //restart the simulation
-    } else {
+    } 
+    else 
+    {
         delete city;
         return 0;
 	}
